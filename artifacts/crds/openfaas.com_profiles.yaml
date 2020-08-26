@@ -615,6 +615,15 @@ spec:
                               node on which any of the selected pods is running. Empty
                               topologyKey is not allowed.
                             type: string
+            dnsPolicy:
+              description: "If specified, the pod's DNS policy. \n Valid values are
+                'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'. DNS
+                parameters given in DNSConfig will be merged with the policy selected
+                with DNSPolicy. To have DNS options set along with hostNetwork, you
+                have to specify DNS policy explicitly to 'ClusterFirstWithHostNet'.
+                \n copied to the Pod DNSPolicy, this will replace any existing value
+                or previously applied Profile."
+              type: string
             podSecurityContext:
               description: "SecurityContext holds pod-level security attributes and
                 common container settings. Optional: Defaults to empty.  See type

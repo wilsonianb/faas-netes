@@ -175,6 +175,10 @@ func (f FunctionFactory) ApplyProfile(profile Profile, deployment *appsv1.Deploy
 
 		profile.PodSecurityContext.DeepCopyInto(deployment.Spec.Template.Spec.SecurityContext)
 	}
+
+	if profile.DNSPolicy != nil {
+		deployment.Spec.Template.Spec.DNSPolicy = *profile.DNSPolicy
+	}
 }
 
 // RemoveProfile is the inverse of Apply, removing the mutations that the Profile would have applied
@@ -228,6 +232,12 @@ func (f FunctionFactory) RemoveProfile(profile Profile, deployment *appsv1.Deplo
 		}
 		if profile.PodSecurityContext.Sysctls != nil {
 			deployment.Spec.Template.Spec.SecurityContext.Sysctls = nil
+		}
+	}
+
+	if profile.DNSPolicy != nil {
+		if deployment.Spec.Template.Spec.DNSPolicy == *profile.DNSPolicy {
+			deployment.Spec.Template.Spec.DNSPolicy = corev1.DNSClusterFirst
 		}
 	}
 }
